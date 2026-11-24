@@ -25,16 +25,27 @@ async def test_project(dut):
 
     dut._log.info("Test project behavior")
 
-    # Set the input values you want to test
-    dut.ui_in.value = 20
-    dut.uio_in.value = 30
+   # Tabla esperada (0gfedcba) según las compuertas exactas de tu esquemático
+    expected = [
+        0x3F, # 0
+        0x06, # 1
+        0x5B, # 2
+        0x4F, # 3
+        0x66, # 4
+        0x6D, # 5
+        0x7C, # 6 (sin segmento superior)
+        0x07, # 7
+        0x7F, # 8
+        0x67, # 9 (sin segmento inferior)
+        0x77, # A
+        0x7C, # b
+        0x39, # C
+        0x5E, # d
+        0x79, # E
+        0x71, # F
+    ]
 
-    # Wait for one clock cycle to see the output values
-    await ClockCycles(dut.clk, 1)
-
-    # The following assersion is just an example of how to check the output values.
-    # Change it to match the actual expected output of your module:
-    assert dut.uo_out.value == 50
-
-    # Keep testing the module by changing the input values, waiting for
-    # one or more clock cycles, and asserting the expected output values.
+    for val, exp in enumerate(expected):
+        dut.ui_in.value = val
+        await ClockCycles(dut.clk, 1)
+        assert dut.uo_out.value == exp, f"Entrada {val:X}: esperado {exp:#04x}, recibido {int(dut.uo_out.value):#04x}"
