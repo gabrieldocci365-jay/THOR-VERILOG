@@ -9,12 +9,12 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
+This project is a combinational 4-bit hexadecimal-to-7-segment decoder. It reads a 4-bit binary input from `ui_in[3:0]` (representing values `0` through `F`) and drives the corresponding active-high segment signals (`a` through `g`) on `uo_out[6:0]`.
 
 ## How to test
 
-Explain how to use your project
+Set the desired 4-bit binary value using input switches `ui_in[0]` (LSB) through `ui_in[3]` (MSB). The matching hexadecimal character (`0`–`F`) will immediately light up on the 7-segment display. No clock or reset signal is required.
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+A common-cathode 7-segment display connected to `uo_out[6:0]` (such as the onboard 7-segment display on the Tiny Tapeout demo board).
